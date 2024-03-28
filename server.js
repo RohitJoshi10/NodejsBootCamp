@@ -1,12 +1,12 @@
-var fs = require("fs");
-var os = require("os");
+const notes = require("./notes");
+var _ = require("lodash");
 
-var user = os.userInfo();
-console.log(user.username);
+console.log("server file is available");
+var number = notes.num;
+var addition = notes.addNumber(number + 10, 10);
+console.log(number);
+console.log("addition is:", +addition);
 
-fs.appendFile("greeting.txt", "Hi " + user.username + "!\n", () =>
-  console.log("file is created")
-);
-
-console.log(os);
-console.log(fs);
+var data = ["person", "person", 1, 2, 1, 2, "name", "age", "2"];
+var filter = _.uniq(data);
+console.log(filter);
