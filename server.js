@@ -1,15 +1,24 @@
-const notes = require("./notes");
-var _ = require("lodash");
+const express = require("express");
+const app = express();
 
-console.log("server file is available");
-var number = notes.num;
-var addition = notes.addNumber(number + 10, 10);
-console.log(number);
-console.log("addition is:", +addition);
+app.get("/", function (req, res) {
+  res.send("Welcome to my Hotel...");
+});
 
-var data = ["person", "person", 1, 2, 1, 2, "name", "age", "2"];
-var filter = _.uniq(data);
-console.log(filter);
+app.get("/chicken", function (req, res) {
+  res.send("Your chicken is going to be prepared soon...");
+});
 
-var x = 5;
-console.log(x);
+app.get("/idli", (req, res) => {
+  var customized_idli = {
+    name: "rava idli",
+    size: "10 cm diameter",
+    is_sambhar: true,
+    is_chuteny: false,
+  };
+  res.send(customized_idli);
+});
+
+app.listen(3000, () => {
+  console.log("Server is listening on port 3000");
+});
