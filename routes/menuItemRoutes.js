@@ -50,4 +50,49 @@ router.get("/:taste", async (req, res) => {
   }
 });
 
+// PUT/PATCH Method Update the MenuItem record
+router.put("/:id", async (req, res) => {
+  try {
+    const menuItemId = req.params.id; // Extract the id from the URL parameter
+    const updatedMenuItem = req.body; // Updated data for the menuItem
+
+    const response = await MenuItem.findByIdAndUpdate(
+      menuItemId,
+      updatedMenuItem,
+      {
+        new: true, // Return the updated documnet means update hone k baad jo document ayega usko hum as a response send krenge
+        runValidators: true, // Run Mongoose validation like unique, requird.
+      }
+    );
+
+    if (!response) {
+      // If id is not correct then nothing will come in response
+      return res.status(404).json({ error: "MenuItem not found" });
+    }
+    console.log("Data Updated Successfully...");
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// DELETE a MenuItem
+router.delete("/:id", async (req, res) => {
+  try {
+    const menuItemId = req.params.id; // Extract the id from the URL parameter
+
+    const response = await MenuItem.findByIdAndDelete(menuItemId);
+    if (!response) {
+      // If id is not correct then nothing will come in response
+      return res.status(404).json({ error: "MenuItem not found" });
+    }
+    console.log("Data Deleted");
+    res.status(200).json({ message: "MenuItem deleted Successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
