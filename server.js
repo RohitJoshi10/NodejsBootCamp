@@ -7,6 +7,15 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000; // if  process.env.PORT present hai toh wo isko use krega wrna 3000 use krega
 
+// Middleware Functions
+const logRequest = (req, res, next) => {
+  console.log(
+    `[${new Date().toLocaleString()}] Request Made to : ${req.originalUrl}`
+  );
+  next(); // Move on to the next phase
+};
+
+app.use(logRequest);
 app.get("/", function (req, res) {
   res.send("Welcome to my Hotel...");
 });
